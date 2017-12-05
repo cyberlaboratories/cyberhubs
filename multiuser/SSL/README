@@ -1,0 +1,15 @@
+Use certbot-auto from https://certbot.eff.org/docs/install.html#operating-system-packages
+
+$ wget https://dl.eff.org/certbot-auto
+$ chmod a+x ./certbot-auto
+$ sudo ./certbot-auto certonly --standalone --preferred-challenges http --rsa-key-size 4096  -d name.of.server.as.in.OAuth.app
+
+where `name.of.server.as.in.OAuth.app` is the URL of the server you are running.
+
+$ sudo cp -r /etc/letsencrypt/archive/name.of.server.as.in.OAuth.app .
+$ cp ./name.of.server.as.in.OAuth.app/fullchain.pem ssl.crt
+$ cp ./name.of.server.as.in.OAuth.app/privkey.pem ssl.key
+
+
+
+
