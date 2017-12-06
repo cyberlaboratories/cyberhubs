@@ -95,6 +95,8 @@ This concludes the configuration of the host.
 
 ## Docker configuration
 
+Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs) repository. 
+
 ### Adding mount points and volumes
 * Mount any external volumes you may want to add to the lab using `scripts/mnt_alias.sh`.
 * This will create the `/mnt/` volumes as seen in the `config.DockerSpawner.`
@@ -112,8 +114,7 @@ This concludes the configuration of the host.
     * Add the name of the singleuser docker container name
 * `source /scripts/jupyterhub-config-script.sh`
 * Optional whitelist and blacklist usage:
-    * Create a directory called `access` under `dockerfiles/multiuser/`that will contain the `blist` and `wlist` files if needed.
-    * Add the users to the `blist` or `wlist` files as required. Each line should have a single user.
+    * The directory  `access` under `multiuser/`that will contain the `blist` and `wlist` files if needed, the `multiuser/access/README.md`
     * If the `wlist`, `blist` and the whitelist environment variable in `scripts/jupyterhub-config-script.sh` are empty, then all the github users are allowed to log in.
     * If the `wlist` and/or the whitelist environment variable is not empty, then only the whitelisted users will be allowed to log in. 
     * The black list wins all the time: any user from the black list is denied access no matter what.  
