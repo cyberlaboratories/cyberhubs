@@ -41,7 +41,9 @@ config.DockerSpawner.volumes = {os.environ['JUPYTER_HUB_VL_PATH'].split(':')[0]:
 config.Authenticator.admin_users = set(os.environ['JUPYTER_HUB_ADMN_NM'].split(','))
 
 # white list from scripts/jupyterhub-config-script.sh (can not be changed after launch, use blist file instead)
-config.Authenticator.whitelist = set(os.environ['JUPYTER_HUB_WHT_LST'].split(','))
+# if whitelist environment variable is blank, do not assign it to anything.
+if os.environ['JUPYTER_HUB_WHT_LST']!='':
+    config.Authenticator.whitelist = set(os.environ['JUPYTER_HUB_WHT_LST'].split(','))
 
 # Spawn users in dockers
 network_name = os.environ["DOCKER_NETWORK_NAME"]
