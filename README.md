@@ -123,7 +123,7 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
 
 ### Building or pulling the docker images
-* Build the _singleuser_ and the _multiuser_ docker images; go to `corehub/singleuser` and build image
+* Build the _singleuser_ and the _multiuser_ docker images; go to `cyberhubs/singleuser` and build image
 ```
 make build
 ```
@@ -157,15 +157,23 @@ If you have created new singleuser hubs that you would like to share in the cybe
 
 * To pull corehub, after successfully logging in, you can get and run the images by:
 ```
-docker pull cyberhubs/multisuer
-docker pull cyberhubs/corehubsingeluser
+docker pull cyberhubs/multiuser
+docker pull cyberhubs/corehub
 ```
-* You can tag your images with whatever new name you'd like with `docker tag OLD_NAME NEW_NAME`. This is useful when building other images from cyberhubs/corehubsingleuser.
+* You can tag your images with whatever new name you'd like with `docker tag OLD_NAME NEW_NAME`. This is useful when building other images from cyberhubs/corehub.
 
 # Pushing your images to DockerHub
 * tag singleuser and multiuser image the image to be uploaded: `docker tag image_ID_321 cyberhubs/corehub` (for singleuser) and 
   `docker tag image_ID_123 cyberhubs/multiuser` (get the image ID with `docker images`)
 * push to repository, for example: `docker push  cyberhubs/multiuser`
+
+# Using Application Hubs with Corehub
+
+Once you have pulled and/or are running your cyberhub corehub utilities, you can pull other singleuser 
+images that will build on top of your corehubs. These images are called Application Hubs, and you can 
+either build your own from the AstroHubs github repository, or you can pull from Dockerhub directly. 
+Currently, wendihub, in (cyberlaboratories/astrohubs on GitHub to view source code), is built, and can be pulled via 
+`docker pull cyberhubs/wendihub`. 
 
 # Other useful commands
 ```
