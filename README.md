@@ -1,5 +1,5 @@
 ### TODO 
-##
+
 Look for "todo" in this document to find open issues.
 
 Remaining todos: [2]
@@ -122,17 +122,32 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 ### Configure SSL keys/certificates
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
 
-### Building or pulling the docker images
+### Deploying the pre-built docker images
+
+* Before this step, the environment variables should be properly configured as outlined in the above step. Once the environment variables have been set, the next step is to deploy the existing _singleuser_ corehub image from DockerHub. 
+```
+docker pull cyberhubs/corehub
+```
+Once the once the _singleuser_ image has been deployed, the _multiuser_ image can also be run by 
+```
+docker-compose up
+```
+
+### Building the docker images (not recommended)
+
 * Build the _singleuser_ and the _multiuser_ docker images; go to `cyberhubs/singleuser` and build image
 ```
 make build
 ```
+Before building the _multiuser_ image, you *must* change the `docker-compose.yml` file in `cyberhubs/multiuser` to be used in _build_ mode and not _pull_ mode. This difference is commented in the `docker-compose.yml` file. Regular comments are denoted with `#:` where as comments to edit are denoted with just a `#`. Specific instructions are outline in the file itself, read carefully!
+ 
+After `docker-compose.yml` is changed, build the _multiuser_ image with
 
-After singleuser is built go to `corehub/dockerfiles/multiuser` and built multiuser image
 ```
 docker-compose build
 ```
-and start 
+Note that this does not start the start the _multiuser_, so follow up with 
+
 ```
 docker-compose up
 ```
@@ -145,7 +160,7 @@ In order to keep the system clean purge unused images from time to time using `d
 ### Monitor and set number of processes
 In a default configuration the user that is running the docker service (_centos_ in our case) may run against the processes number limit. Check number of processes with this command: `ps -efL --no-headers |wc -l`. In order to change the max number of processes add `nproc` in `/etc/security/limits.conf` to specify the new soft and hard limits.
 
-# Pushing and pulling docker images from Docker Hub
+### Pushing and pulling docker images from Docker Hub
 If you have created new singleuser hubs that you would like to share in the cyberhubs framework you can add these to the cyberhubs docker hub repository.
 
 * get account on http://hub.docker.com
@@ -153,29 +168,22 @@ If you have created new singleuser hubs that you would like to share in the cybe
 * login: `docker login --username=username`
 * list all images: `docker images`
 
-# Pulling pre-built images from DockerHub.
-
-* To pull corehub, after successfully logging in, you can get and run the images by:
-```
-docker pull cyberhubs/multiuser
-docker pull cyberhubs/corehub
-```
 * You can tag your images with whatever new name you'd like with `docker tag OLD_NAME NEW_NAME`. This is useful when building other images from cyberhubs/corehub.
 
-# Pushing your images to DockerHub
+### Pushing your images to DockerHub
 * tag singleuser and multiuser image the image to be uploaded: `docker tag image_ID_321 cyberhubs/corehub` (for singleuser) and 
   `docker tag image_ID_123 cyberhubs/multiuser` (get the image ID with `docker images`)
 * push to repository, for example: `docker push  cyberhubs/multiuser`
 
-# Using Application Hubs with Corehub
+### Using Application Hubs with Corehub
 
 Once you have pulled and/or are running your cyberhub corehub utilities, you can pull other singleuser 
-images that will build on top of your corehubs. These images are called Application Hubs, and you can 
-either build your own from the AstroHubs github repository, or you can pull from Dockerhub directly. 
+images that will build on top of your corehubs. These images are called _application_ _hubs_, and you can 
+either build your own from the astrohubs GitHub repository, or you can pull from DockerHub directly. 
 Currently, wendihub, in (cyberlaboratories/astrohubs on GitHub to view source code), is built, and can be pulled via 
 `docker pull cyberhubs/wendihub`. 
 
-# Other useful commands
+## Other useful commands
 ```
 docker rmi $(docker images -q) # removes all docker images
 docker-compose down; docker kill $(docker ps -aq); docker rm $(docker ps -aq) # stops all running Docker containers
