@@ -25,7 +25,7 @@ RUN pip2 install -r /tmp/requirements/single_pip2_requirements_corehub.txt && \
     pip3 install -r /tmp/requirements/single_pip3_requirements_corehub.txt && \
     python2 -m bash_kernel.install && python3 -m bash_kernel.install && \
     jupyter serverextension enable --py jupyterlab --sys-prefix && \
-    jupyter labextension install @jupyterlab/hub-extension && \
+    jupyter labextension install @jupyterlab/hub-extension@0.6.0 && \
     useradd -d /home/user -m -c "" user && mkdir /home/user/notebooks
 
 COPY singleuser.sh /srv/singleuser/singleuser.sh
