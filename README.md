@@ -141,17 +141,17 @@ docker-compose up
 ```
 make build
 ```
-Before building the _multiuser_ image you _must_ change the `docker-compose.yml` file in `cyberhubs/multiuser` to be used in _build_ mode and not _pull_ mode. This difference is documented within the `docker-compose.yml` file. Regular comments are denoted with `#:` where as comments to edit are denoted with just a `#`. Specific instructions are outline in the file itself, read carefully!
+* Before building the _multiuser_ image you _must_ change the `docker-compose.yml` file in `cyberhubs/multiuser` to be used in _build_ mode and not _pull_ mode. This difference is documented within the `docker-compose.yml` file. Regular comments are denoted with `#:` where as comments to edit are denoted with just a `#`. Specific instructions are outline in the file itself, read carefully!
 
-After `docker-compose.yml` is changed, build the _multiuser_ image with
+* After `docker-compose.yml` is changed, build the _multiuser_ image with
 ```
 docker-compose build
 ```
-Note that this does not start the _multiuser_, so follow up with
+* Note that this does not start the _multiuser_, so follow up with
 ```
 docker-compose up
 ```
-This will start your _multiuser_ docker-environment. For more commands, such as bringing down your docker environment, see the `corehub/dockerfiles/multiuser/README.md` file. 
+* This will start your _multiuser_ docker-environment. For more commands, such as bringing down your docker environment, see the `corehub/dockerfiles/multiuser/README.md` file. 
 
 ## Maintencance
 ### Prune unused images
