@@ -117,41 +117,41 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
     * The directory  `access` under `multiuser/`that will contain the `blist` and `wlist` files if needed, the `multiuser/access/README.md`
     * If the `wlist`, `blist` and the whitelist environment variable in `scripts/jupyterhub-config-script.sh` are empty, then all the github users are allowed to log in.
     * If the `wlist` and/or the whitelist environment variable is not empty, then only the whitelisted users will be allowed to log in. 
-    * The black list wins all the time: any user from the black list is denied access no matter what.  
+    * The black list wins all the time: any user from the black list is denied access no matter what.
+### Important Note Regarding Whitelisting and Blacklisting
+* Any time the whiltelist or blacklist users have changed, the singleuser page _must_ be reloaded _not_ by simply refreshing the page, rather by clicking on the logo of the particular _astrohub_ _singleuser_ found in the upper left corner of the screen. 
+* Another method is to re-visit the native URL of the _singleuser_ host.The reason this is necessary is because the request for authentification must be re-made. When the URL of the page is simply refreshed, it does not re-submit this request, and so the whitelist and blacklist changes will not be made or seen.   
 
 ### Configure SSL keys/certificates
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
 
 ### Deploying the pre-built docker images
-
-* Before this step, the environment variables should be properly configured as outlined in the above step. Once the environment variables have been set, the next step is to deploy the existing _singleuser_ corehub image from DockerHub. 
+* Before this step, the environment variables should be properly configured as outlined in the above step. Once the environment variables have been set, the next step is to deploy the existing singleuser corehub image from DockerHub.
 ```
 docker pull cyberhubs/corehub
 ```
-Once the once the _singleuser_ image has been deployed, the _multiuser_ image can also be run by 
+* Once the once the singleuser image has been deployed, the multiuser image can also be run by
+
 ```
 docker-compose up
 ```
 
-### Building the docker images (not recommended)
-
+### Building the docker images from scratch (not recommended)
 * Build the _singleuser_ and the _multiuser_ docker images; go to `cyberhubs/singleuser` and build image
 ```
 make build
 ```
-Before building the _multiuser_ image, you *must* change the `docker-compose.yml` file in `cyberhubs/multiuser` to be used in _build_ mode and not _pull_ mode. This difference is commented in the `docker-compose.yml` file. Regular comments are denoted with `#:` where as comments to edit are denoted with just a `#`. Specific instructions are outline in the file itself, read carefully!
- 
-After `docker-compose.yml` is changed, build the _multiuser_ image with
+Before building the _multiuser_ image you _must_ change the `docker-compose.yml` file in `cyberhubs/multiuser` to be used in _build_ mode and not _pull_ mode. This difference is documented within the `docker-compose.yml` file. Regular comments are denoted with `#:` where as comments to edit are denoted with just a `#`. Specific instructions are outline in the file itself, read carefully!
 
+After `docker-compose.yml` is changed, build the _multiuser_ image with
 ```
 docker-compose build
 ```
-Note that this does not start the start the _multiuser_, so follow up with 
-
+Note that this does not start the _multiuser_, so follow up with
 ```
 docker-compose up
 ```
-This will start your multiuser docker-environment. For more commands, such as bringing down your docker environment, see the `corehub/dockerfiles/multiuser/README`.
+This will start your _multiuser_ docker-environment. For more commands, such as bringing down your docker environment, see the `corehub/dockerfiles/multiuser/README.md` file. 
 
 ## Maintencance
 ### Prune unused images
@@ -160,7 +160,7 @@ In order to keep the system clean purge unused images from time to time using `d
 ### Monitor and set number of processes
 In a default configuration the user that is running the docker service (_centos_ in our case) may run against the processes number limit. Check number of processes with this command: `ps -efL --no-headers |wc -l`. In order to change the max number of processes add `nproc` in `/etc/security/limits.conf` to specify the new soft and hard limits.
 
-### Pushing and pulling docker images from Docker Hub
+# Pushing and pulling docker images from Docker Hub
 If you have created new singleuser hubs that you would like to share in the cyberhubs framework you can add these to the cyberhubs docker hub repository.
 
 * get account on http://hub.docker.com
@@ -168,22 +168,21 @@ If you have created new singleuser hubs that you would like to share in the cybe
 * login: `docker login --username=username`
 * list all images: `docker images`
 
-* You can tag your images with whatever new name you'd like with `docker tag OLD_NAME NEW_NAME`. This is useful when building other images from cyberhubs/corehub.
+# Pulling pre-built images from DockerHub.
 
-### Pushing your images to DockerHub
+* To pull corehub, after successfully logging in, you can get and run the images by:
+```
+docker pull cyberhubs/multiuser
+docker pull cyberhubs/corehubsingeluser
+```
+* You can tag your images with whatever new name you'd like with `docker tag OLD_NAME NEW_NAME`. This is useful when building other images from cyberhubs/corehubsingleuser.
+
+# Pushing your images to DockerHub
 * tag singleuser and multiuser image the image to be uploaded: `docker tag image_ID_321 cyberhubs/corehub` (for singleuser) and 
   `docker tag image_ID_123 cyberhubs/multiuser` (get the image ID with `docker images`)
 * push to repository, for example: `docker push  cyberhubs/multiuser`
 
-### Using Application Hubs with Corehub
-
-Once you have pulled and/or are running your cyberhub corehub utilities, you can pull other singleuser 
-images that will build on top of your corehubs. These images are called _application_ _hubs_, and you can 
-either build your own from the astrohubs GitHub repository, or you can pull from DockerHub directly. 
-Currently, wendihub, in (cyberlaboratories/astrohubs on GitHub to view source code), is built, and can be pulled via 
-`docker pull cyberhubs/wendihub`. 
-
-## Other useful commands
+# Other useful commands
 ```
 docker rmi $(docker images -q) # removes all docker images
 docker-compose down; docker kill $(docker ps -aq); docker rm $(docker ps -aq) # stops all running Docker containers
