@@ -119,7 +119,8 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
     * If the `wlist` and/or the whitelist environment variable is not empty, then only the whitelisted users will be allowed to log in. 
     * The black list wins all the time: any user from the black list is denied access no matter what.
 ### Important Note Regarding Whitelisting and Blacklisting
-* Any time the whiltelist or blacklist users have changed, the singleuser page _must_ be reloaded _not_ by simply refreshing the page, rather by clicking on the logo of the particular _astrohub_ _singleuser_ found in the upper left corner of the screen. Another method is to visit the native URL of the _singleuser_ host.   
+* Any time the whiltelist or blacklist users have changed, the singleuser page _must_ be reloaded _not_ by simply refreshing the page, rather by clicking on the logo of the particular _astrohub_ _singleuser_ found in the upper left corner of the screen. 
+* Another method is to re-visit the native URL of the _singleuser_ host.The reason this is necessary is because the request for authentification must be re-made. When the URL of the page is simply refreshed, it does not re-submit this request, and so the whitelist and blacklist changes will not be made or seen.   
 
 ### Configure SSL keys/certificates
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
