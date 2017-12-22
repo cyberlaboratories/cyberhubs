@@ -148,7 +148,8 @@ In order to keep the system clean purge unused images from time to time using `d
 ### Monitor and set number of processes
 In a default configuration the user that is running the docker service (_centos_ in our case) may run against the processes number limit. Check number of processes with this command: `ps -efL --no-headers |wc -l`. In order to change the max number of processes add `nproc` in `/etc/security/limits.conf` to specify the new soft and hard limits.
 
-# Pushing and pulling docker images from Docker Hub
+## Basic docker
+### Docker Hub repository
 If you have created new singleuser hubs that you would like to share in the cyberhubs framework you can add these to the cyberhubs docker hub repository.
 
 * get account on http://hub.docker.com
@@ -156,7 +157,7 @@ If you have created new singleuser hubs that you would like to share in the cybe
 * login: `docker login --username=username`
 * list all images: `docker images`
 
-# Pulling pre-built images from DockerHub.
+#### Pulling pre-built images from DockerHub.
 
 * To pull corehub, after successfully logging in, you can get and run the images by:
 ```
@@ -165,12 +166,12 @@ docker pull cyberhubs/corehubsingeluser
 ```
 * You can tag your images with whatever new name you'd like with `docker tag OLD_NAME NEW_NAME`. This is useful when building other images from cyberhubs/corehubsingleuser.
 
-# Pushing your images to DockerHub
+#### Pushing your images to DockerHub
 * tag singleuser and multiuser image the image to be uploaded: `docker tag image_ID_321 cyberhubs/corehub` (for singleuser) and 
   `docker tag image_ID_123 cyberhubs/multiuser` (get the image ID with `docker images`)
 * push to repository, for example: `docker push  cyberhubs/multiuser`
 
-# Other useful commands
+### Other useful commands
 ```
 docker rmi $(docker images -q) # removes all docker images
 docker-compose down; docker kill $(docker ps -aq); docker rm $(docker ps -aq) # stops all running Docker containers
@@ -180,3 +181,7 @@ docker exec -it fherwig/corehub:multiuser bash # Enter bash (similar to SSH) int
 docker pull fherwig/corehub:singleuser # Take a docker image from the DockerHub 
 docker pull -a fherwig/corehub # pull all images from repo on DockerHub
 ```
+
+## Roadmap
+The following improvements are planned to be implemented:
+1. automatically renew certificats when needed (`certbot reniew --dry-run`, cronjob)
