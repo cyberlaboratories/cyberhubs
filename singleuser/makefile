@@ -1,2 +1,2 @@
 build: 
-	docker build -t corehub/singleuser .
+	docker build -t local/corehub .
