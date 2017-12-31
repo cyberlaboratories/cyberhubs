@@ -66,7 +66,6 @@ class NBLabDockerSpawner(DockerSpawner):
         <select name="imgSelect" size="1">
         <option value="viaenv">Via Environment Variable</option>
         <option value="cyberhubs/corehub">corehub</option>
-        <option value="cyberhubs/wendihub">wendihub</option>
         </select>
 
         """.format(nbtype=default_jpynb,imgSelect=default_imgSelect)                      
