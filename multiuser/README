@@ -1,18 +1,17 @@
 In most cases it is not necessary to build the multiuser docker image
 yourself, and instead it is recommended to use the pre-built multiuser
-image from the cyberhubs docker hub repository. In that case skip the
-build step.  
+image from the cyberhubs docker hub repository. Check the
+./docker-compose.yml file where the option to build the images
+yourself or to pull the multiuser image from the docker hub are
+clearly indicated. Uncomment the desired option. Again, the default is
+to pull the image from docker hub, and this option is recommended.
 
-To build the image, you must first see ./docker-compose.yml and see the
-commented lines. There are four lines necessary to uncomment, and one
-line that will need to be commented.
-
-Building multiuser image:
--------------------------
-(Not recommended) If for some reason you do want to build the
-dockerfile yourself run command:
-
- docker-compose build
+Building manually:
+------------------
+If you decide to build yourself the docker-compose mechanism will launch the 
+build command automatically if the image does not yet exist. If you need to 
+build manually, use 
+  docker-compose build
 
 Launching cyberlab:
 -------------------

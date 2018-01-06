@@ -29,13 +29,19 @@ All astrohubs and corehub multiuser and singleuser are available as pre-built do
 #### About this documentation
 This documentation describes
 1. The configuration of a Linux server in order to host the core cyberhub.
-2. The building of the Docker images of the multiuser and singleuser components of the corehub.
+2. The (optional) building of the Docker images of the multiuser and singleuser components of the corehub.
 3. The configuration and deployment of the docker images into a running service. 
 
-In most cases users wishing to deploy a cyberhub should not start by building the Docker images themselves, but instead launch the service from pre-built images available on [DockerHub](http://hub.docker.com). The deployment prepraration and procedure is, however, in both cases very similar, with the only difference that the _docker build_ step would be ommitted when
-launching from pre-built docker images. For that reason, both options are
-covered by this documentation and this repo, and the differences in
-deployment will be clearly marked (see [multiuser/README](./multiuser/README)).
+In most cases users wishing to deploy a cyberhub should not start by
+building the Docker images themselves, but instead launch the service
+from pre-built images available from the [Cyberhubs Docker
+repository](https://hub.docker.com/u/cyberhubs/). The deployment prepraration and
+procedure is, however, in both cases almost the same, with the only
+difference that the _docker build_ step would be ommitted when
+launching from pre-built docker images. For that reason, both options
+are covered by this documentation and this repo, and the differences
+in deployment will be clearly marked (see
+[multiuser/README](./multiuser/README)).
 
  
 ## Configuring the host server
@@ -100,9 +106,11 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 ### Adding mount points and volumes
 * Mount any external volumes you may want to add to the lab using `scripts/mnt_alias.sh`.
 * This will create the `/mnt/` volumes as seen in the `config.DockerSpawner.`
-**todo: PERMISSION ERRORS WHEN EXECUTING SCRIPTS ??** 
+**todo: PERMISSION ERRORS WHEN EXECUTING SCRIPTS ??, check again when doing a fresh install** 
 * configure environment variables in `scripts/jupyterhub-config-script.sh`:
-    * Mount points: add private, shared and immutable data spaces.
+    * define `JUPYTER_HUB_AUTH_UR`, `JUPYTER_HUB_CLNT_ID`, `JUPYTER_HUB_CLNT_SE` (see next section)
+    * define mount points of external storage: add private, shared and immutable data spaces.
+    * define server admins: `JUPYTER_HUB_ADMN_NM`
 
 ### OAuth authentication and user configuration
 * Register the jupyterhub application
@@ -125,21 +133,12 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 ### Configure SSL keys/certificates
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
 
-### Building or pulling the docker images
-* Build the _singleuser_ and the _multiuser_ docker images; go to `corehub/singleuser` and build image
-```
-make build
-```
-
-After singleuser is built go to `corehub/dockerfiles/multiuser` and built multiuser image
-```
-docker-compose build
-```
-and start 
-```
-docker-compose up
-```
-This will start your multiuser docker-environment. For more commands, such as bringing down your docker environment, see the `corehub/dockerfiles/multiuser/README`.
+### Pulling the docker images and starting the service
+* Pull an application hub(singleuser) image, such as `docker pull cyberhubs/corehub`, or one of the application images available from the [cyberhubs docker hub repp](https://hub.docker.com/u/cyberhubs/) (using `docker pull`), or build images from the source (e.g. if you need to modify or add software packages) available from the [cyberlaboratories/astrophubs GitHub](https://github.com/cyberlaboratories/astrohubs) repository.
+* In case you want to build and modify the corehub image available in this [cyberlaboratories/cyberhubs](https://github.com/cyberlaboratories/cyberhubs) repository go to `corehub/singleuser` and build image: `make build`. In this case the image name will be `local/corehub` as specified in the `makefile`.
+* Go to `multiuser` and consult the `README` file for options to build the multiuser image. In most cases you would use the [prebuilt multiuser docker image](https://hub.docker.com/r/cyberhubs/multiuser). You do not need to pull this image manually, it will by default be pulled during the next step.
+* Launch the service: `docker-compose up` (add the option  `-d` to the end of the command to suppress the output). This will start your multiuser docker-environment. 
+* For more commands, such as bringing down your docker environment, see the `corehub/dockerfiles/multiuser/README`, or at the bottom here.  
 
 ## Maintencance
 ### Prune unused images
@@ -185,3 +184,4 @@ docker pull -a fherwig/corehub # pull all images from repo on DockerHub
 ## Roadmap
 The following improvements are planned to be implemented:
 1. automatically renew certificats when needed (`certbot reniew --dry-run`, cronjob)
+2. time-out open access followed by wlisting
