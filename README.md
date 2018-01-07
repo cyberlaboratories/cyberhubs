@@ -205,3 +205,4 @@ docker pull -a fherwig/corehub # pull all images from repo on DockerHub
 The following improvements are planned to be implemented:
 1. automatically renew certificats when needed (`certbot reniew --dry-run`, cronjob)
 2. time-out open access followed by wlisting
+3. add [jupyterlab Gitlab extension](https://github.com/jupyterlab/jupyterlab-github)
