@@ -133,6 +133,26 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 ### Configure SSL keys/certificates
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
 
+### Configure the spawner menu
+
+This multiuser image allows specification and menu-based user
+selection among several application hubs. The default is to offer
+`corehub` and the application hub defined in the variable
+```
+export JUPYTER_SGLEUSR_IMG='cyberhubs/corehub:latest' 
+```
+in `scripts/jupyterhub-config-script.sh`. The spawner menu can easily be configured to
+offer more option. This is specified in
+`multiuser/jupyterhub_config.py`, look for lines such as
+```
+        <option value="cyberhubs/corehub">corehub</option>
+```
+in the function `def _options_form(self):`. Just add lines with available applicationhubs, such as
+```
+<option value="cyberhubs/wendihub">Wendi</option>
+```
+with locally available application hub docker images (`docker images`).
+
 ### Pulling the docker images and starting the service
 * Pull an application hub(singleuser) image, such as `docker pull cyberhubs/corehub`, or one of the application images available from the [cyberhubs docker hub repp](https://hub.docker.com/u/cyberhubs/) (using `docker pull`), or build images from the source (e.g. if you need to modify or add software packages) available from the [cyberlaboratories/astrophubs GitHub](https://github.com/cyberlaboratories/astrohubs) repository.
 * In case you want to build and modify the corehub image available in this [cyberlaboratories/cyberhubs](https://github.com/cyberlaboratories/cyberhubs) repository go to `corehub/singleuser` and build image: `make build`. In this case the image name will be `local/corehub` as specified in the `makefile`.
