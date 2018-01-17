@@ -58,6 +58,7 @@ University of Victoria and running OpenStack.
 * Associate IP address, and try to connect to IP
 
 ### Prepare Unix OS
+* It is recommended to operate this service as a dedicated user, such as the default   `centos` user, or a dedicated user `docker`.
 * Start with CentOS 7 image
 * Update all packages: `sudo yum update`
 * Install the following packages:
@@ -66,20 +67,25 @@ University of Victoria and running OpenStack.
 * Install [docker-ce (community edition)](https://docs.docker.com/engine/installation/linux/docker-ce/centos/)
 * Install docker-engine: `sudo yum install docker-engine` **todo: figure out how this works - if you want to lock-in the version used at the time of writing use step 2 in the docker engine build steps in the above link to choose a stable version, as of Nov. 2017, this version is: `docker-ce-17.09.0.ce-1.el7`**
 
-Before starting the docker service prepare some disk mount points and data locations.
-The docker images may not be stored in their default location because there is not enough space  in the system dir. Instead move `/var/lib/docker` to `/mnt/var/lib`.
 
-* prepare or arrange for additional drive at mount point `/mnt` 
-    - Given the layered file structure of docker images, the host can easily run out of inodes. 
-It is recommended to be proactive and make an ext4 file system with large number of inodes: `mkfs -t ext4 -N 2147483648 /dev/XdY`. 
-    - this is where the users containers will live and where some shared user space will be available
-    - if you run out of space here you are in trouble as your docker installation may become unresponsive and difficult to resurrect
-    - 100GB size is minimum for a small installation, a TB is much better, ideally fast storage, such as SSD
-* checkout corehub 'git clone '*todo: insert final URL here*
-* make sure `/var/lib/docker` can live on external drive `/mnt/var/lib/docker` with more space by executing `scripts/mnt_volumses.sh`, 
-* in the `scripts` directory execute `sudo ./mnt_volumses.sh`
-* set a link, such as `sudo ln -s  /var/lib/docker /mnt/var/lib/docker `
-* Start the docker servers, and add the user to the docker group and checking that the centOS user can execute as user.
+### Get cyberhubs repo and configure disk volumes and mount points
+
+Checkout `cyberlaboratories/cyberhubs` repository: 
+```
+git clone https://github.com/cyberlaboratories/cyberhubs
+```
+
+Before starting the docker service prepare some disk mount points and data locations. The docker images may not be stored in their default location `/var/lib/docker` because there may not be enough space in the system dir. Instead, prepare or arrange for additional drive at mount point `/mnt`. Then  move `/var/lib/docker` to `/mnt/var/lib`, and then set a symbolic link (see below).
+
+- Given the layered file structure of docker images, the host can easily run out of inodes. It is recommended to be proactive and make an ext4 file system to host the system docker directory with large number of inodes: `mkfs -t ext4 -N 2147483648 /dev/XdY`. 
+- This is also where the users containers will live and where some shared user space will be available.
+- If you run out of space here you are in trouble as your docker installation may become unresponsive and difficult to resurrect.
+- 100GB size is minimum for a small installation, a TB is much better, ideally fast storage, such as SSD.
+
+Setup the `/mnt` volume correctly: 
+* In the `scripts` directory of the `cyberhubs` repo review and execute `sudo ./mnt_volumses.sh`.
+* Set a link, such as `sudo ln -s  /var/lib/docker /mnt/var/lib/docker `.
+* Start the docker service, and add the user to the docker group and checking that the centOS user can execute as user.
 ```
 sudo systemctl enable docker.service
 sudo systemctl start docker
@@ -88,7 +94,7 @@ sudo docker run --rm hello-world
 
 The last command should output _Hello from Docker!_ to signal success.
 
-* Add user _centos_ to docker group:
+* Add dedicated user (e.g. `centos` or `docker`, see above) to docker group:
 `sudo usermod -aG docker centos`, log out and in again, and check docker as user: `docker run --rm hello-world`
 * install pip, [instructions](https://www.liquidweb.com/kb/how-to-install-pip-on-centos-7/)
 ```
