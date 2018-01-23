@@ -6,7 +6,7 @@ Remaining todos: [2]
 
 # Cyberhubs
 
-*Cyberhubs* is an implementation of a JupyterHub server with application specific and customizable _hubs_ instances for multiple users that sign up with github authentication. Cyberhubs consist of two parts
+*Cyberhubs* is an implementation of a JupyterHub server with application specific and customizable _application hubs_ for multiple users that sign up with github authentication. Cyberhubs consist of two parts
 
 * a multiuser launcher that orchestrates administration of multiple users, and
 * a family of application docker _hubs_ (singleuser), each of which presents a data analytics capability targeting a particular user group or application usecase. These hubs can be combined. 
