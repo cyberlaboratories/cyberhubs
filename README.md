@@ -84,7 +84,7 @@ Before starting the docker service prepare some disk mount points and data locat
 
 Setup the `/mnt` volume correctly: 
 * In the `scripts` directory of the `cyberhubs` repo review and execute `sudo ./mnt_volumses.sh`.
-* Set a link, such as `sudo ln -s  /var/lib/docker /mnt/var/lib/docker `.
+* This script will, among other things, set a link from  /mnt/var/lib/docker back to /var/lib/docker (where docker expects this system directory to be).
 * Start the docker service, and add the user to the docker group and checking that the centOS user can execute as user.
 ```
 sudo systemctl enable docker.service
