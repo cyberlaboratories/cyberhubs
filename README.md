@@ -107,7 +107,7 @@ This concludes the configuration of the host.
 
 ## Docker configuration
 
-Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs) repository. 
+Start by cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs) repository. 
 
 ### Adding mount points and volumes
 * Mount any external volumes you may want to add to the lab using `scripts/mnt_alias.sh`.
@@ -120,7 +120,9 @@ Start py cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 
 ### OAuth authentication and user configuration
 * Register the jupyterhub application
-[github registration](https://github.com/settings/applications/new) with GitHub
+[github registration](https://github.com/settings/applications/new) with GitHub. You need to enter
+	- URL of the server (Homepage URL) - use `https`!
+	- server URL and add `/hub/oauth_callback`
 * configure environment variables in `scripts/jupyterhub-config-script.sh`:
     * Specify the github admin user names 
     * Possibly specify allowed users (white listing, can not changed after multiuser is up, not flexible, *todo:* to be updated in next version)
