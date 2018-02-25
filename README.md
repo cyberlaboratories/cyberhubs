@@ -65,7 +65,9 @@ University of Victoria and running OpenStack.
  `sudo yum install git wget sshfs`
 * Install epel-repository packages: `sudo yum install epel-release`
 * Install [docker-ce (community edition)](https://docs.docker.com/engine/installation/linux/docker-ce/centos/)
-* Install docker-engine: `sudo yum install docker-engine` **todo: figure out how this works - if you want to lock-in the version used at the time of writing use step 2 in the docker engine build steps in the above link to choose a stable version, as of Nov. 2017, this version is: `docker-ce-17.09.0.ce-1.el7`**
+	- `sudo yum-config-manager     --add-repo     https://download.docker.com/linux/centos/docker-ce.repo`
+	- `sudo yum install docker-ce-17.09.0.ce`
+* choose a stable version, currently (Nov. 2017 - present) we use: `docker-ce-17.09.0.ce-1.el7'
 
 
 ### Get cyberhubs repo and configure disk volumes and mount points
@@ -112,7 +114,7 @@ Start by cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 ### Adding mount points and volumes
 * Mount any external volumes you may want to add to the lab using `scripts/mnt_alias.sh`.
 * This will create the `/mnt/` volumes as seen in the `config.DockerSpawner.`
-**todo: PERMISSION ERRORS WHEN EXECUTING SCRIPTS ??, check again when doing a fresh install** 
+* it appears the `/dev/fuse` device may not have the right permissions, this should fix it: `sudo chmod a+rw /dev/fuse` (may need more testings) 
 * configure environment variables in `scripts/jupyterhub-config-script.sh`:
     * define `JUPYTER_HUB_AUTH_UR`, `JUPYTER_HUB_CLNT_ID`, `JUPYTER_HUB_CLNT_SE` (see next section)
     * define mount points of external storage: add private, shared and immutable data spaces.
