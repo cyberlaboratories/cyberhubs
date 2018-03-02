@@ -2,7 +2,7 @@
 
 Look for "todo" in this document to find open issues.
 
-Remaining todos: [2]
+Remaining todos: [1]
 
 # Cyberhubs
 
@@ -127,7 +127,7 @@ Start by cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 	- server URL and add `/hub/oauth_callback`
 * configure environment variables in `scripts/jupyterhub-config-script.sh`:
     * Specify the github admin user names 
-    * Possibly specify allowed users (white listing, can not changed after multiuser is up, not flexible, *todo:* to be updated in next version)
+    * Possibly specify allowed users (white listing, can not changed after multiuser is up) *todo:* there are some reports of white listing not always working as advertised, needs to be looked into    
     * Enter the call-back URL, the client_id and secret into.
     * Add the name of the singleuser docker container name
 * `source /scripts/jupyterhub-config-script.sh`
