@@ -12,12 +12,12 @@ class AstroAuthenticator(GitHubOAuthenticator):
         wl=set()
         bl=set()
         if os.path.isfile(wfname):
-           wl = set([line.rstrip('\n') for line in open(wfname)])
+           wl = set([line.rstrip('\n').lower() for line in open(wfname)])
         if self.whitelist:
            wl =  wl | self.whitelist
 
         if os.path.isfile(bfname):
-           bl = set([line.rstrip('\n') for line in open(bfname)])
+           bl = set([line.rstrip('\n').lower() for line in open(bfname)])
         if not wl and not bl:
            return True
         if bl and not wl:
@@ -64,10 +64,15 @@ class NBLabDockerSpawner(DockerSpawner):
         </select>                                             
         <label for="imgSelect">Choose an application hub image ... </label>
         <select name="imgSelect" size="1">
-        <option value="viaenv">Via Environment Variable</option>
-        <option value="cyberhubs/corehub">corehub</option>
+        <option value="cyberhubs/superastrohub">SuperAstroHub</option>
+        <option value="cyberhubs/ppmstarhub">PPMstarhub</option>
+        <option value="cyberhubs/mesawendihub">Mesa.NuGrid.WENDI</option>
+        <option value="cyberhubs/mlhub">MLhub</option>
+        <option value="cyberhubs/mp248">MP248</option>
+        <option value="local/alphatheta">AlphaTheta</option>
+        <option value="local/etamu">EtaMu</option>
+        <option value="local/omegaphi">OmegaPhi</option>
         </select>
-
         """.format(nbtype=default_jpynb,imgSelect=default_imgSelect)                      
                                                               
 #: add lines like the one below to the menue above to provide more application hub options 
@@ -115,6 +120,7 @@ config.JupyterHub.spawner_class = NBLabDockerSpawner
 config.DockerSpawner.use_internal_ip = True
 config.DockerSpawner.network_name = network_name
 config.DockerSpawner.extra_host_config = {"network_mode":network_name}
+config.DockerSpawner.extra_create_kwargs = {os.environ['JUPYTER_USERGROUPID'].split('=')[0]:os.environ['JUPYTER_USERGROUPID'].split('=')[1]}
 config.DockerSpawner.remove_containers = True
 config.DockerSpawner.hub_ip_connect = hub_ip
 

@@ -30,15 +30,25 @@ RUN pip2 install -r /tmp/requirements/single_pip2_requirements_corehub.txt && \
 
 COPY singleuser.sh /srv/singleuser/singleuser.sh
 
+RUN USER=user && \
+    GROUP=user && \
+    wget https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz &&\
+    tar -C /usr/local/bin -xzf fixuid-0.3-linux-amd64.tar.gz && \
+    rm -f  fixuid-0.3-linux-amd64.tar.gz &&\ 
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+
 RUN chown -R user:user /home/user && \
     chmod -R 775 /home/user/ && \
     chmod 775 /usr/local/bin/jupyterhub-singleuser && \
     chmod 775 /srv/singleuser/singleuser.sh 
 
-USER user
+USER user:user
+ENTRYPOINT ["fixuid"]
 
 ENV HOME /home/user
-RUN echo Hi
 WORKDIR /home/user
 
 CMD ["/bin/bash", "/srv/singleuser/singleuser.sh"]

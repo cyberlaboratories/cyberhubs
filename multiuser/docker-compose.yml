@@ -50,7 +50,7 @@ services:
       JUPYTER_HUB_VL_PATH: ${JUPYTER_HUB_VL_PATH}
 
       JUPYTER_SGLEUSR_IMG: ${JUPYTER_SGLEUSR_IMG}
-
+      JUPYTER_USERGROUPID: ${JUPYTER_USERGROUPID}
     command: jupyterhub -f /srv/jupyterhub/jupyterhub_config.py --debug 
 
 networks:

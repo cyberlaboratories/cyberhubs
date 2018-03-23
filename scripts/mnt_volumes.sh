@@ -1,13 +1,12 @@
 # execute with sudo, then source mnt_alias.sh
-
+# 
 set -x 
+docker_user=docker   # e.g. s5, calcium, almuhit
+#docker_user=centos  # compute canada
 
-docker_user=docker  # s5
-#docker_user=centos  # compute canadat
-
-mntpoint='/mnt/scratch/dockerstuff' # s5
-#mntpoint='/mnt' # silver
-# mntpoint='/gpod1' # gold
+#mntpoint='/mnt/scratch/dockerstuff' # s5
+mntpoint='/mnt'                      # silver
+# mntpoint='/gpod1'                  # gold
 
 create_dir() {
     if [ ! -d $1 ]
