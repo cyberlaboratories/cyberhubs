@@ -11,14 +11,14 @@ services:
 #: scripts/jupyter_config.sh file, will be picked up correctly with the pre-
 #: built image; when uncommenting the next four lines the docker image will 
 #: be built in place (not recommended)
-#    build:
-#      context: .
-#      dockerfile: ./Dockerfile
-#    image: corehub/multiuser
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: local/multiuser
 #: the line below will be used to launch the pre-built image on dockerhub; if 
 #: the above four lines are uncommented and instead the following line is
 #: commented then the docker images is built in place (not recommended)
-    image: cyberhubs/multiuser:latest
+#    image: cyberhubs/multiuser:latest
 #: end docker image selection
     container_name: ${DOCKER_MACHINE_NAME}
     volumes:

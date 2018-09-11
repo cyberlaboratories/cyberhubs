@@ -64,15 +64,20 @@ class NBLabDockerSpawner(DockerSpawner):
         </select>                                             
         <label for="imgSelect">Choose an application hub image ... </label>
         <select name="imgSelect" size="1">
-        <option value="viaenv">Via Environment Variable</option>
-        <option value="cyberhubs/corehub">corehub</option>
+        <option value="local/wendihub">Web Exploration of NuGrid Data Interactive (WENDI)</option>
+        <option value="local/mesahub">MESAhub latest</option>
+        <option value="cyberhubs/mesahub">MESAhub 0.9.6</option>
+        <option value="cyberhubs/mesawendihub">NuGridSuper</option>
+        <option value="cyberhubs/ppmstarhub">PPMstarHub</option>
+        <option value="local/corehub">AlphaGamma</option>
+        <option value="cyberhubs/corehub">cyberhubs-corehub</option>
         </select>
-
         """.format(nbtype=default_jpynb,imgSelect=default_imgSelect)                      
                                                               
 #: add lines like the one below to the menue above to provide more application hub options 
 #: in the spawner menu above
 #        <option value="cyberhubs/mlhub">mlhub</option>
+#        <option value="viaenv">Via Environment Variable</option>
 
     def options_from_form(self, formdata):                    
         options = {}                                          
