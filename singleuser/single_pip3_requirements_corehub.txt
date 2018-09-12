@@ -1,3 +1,5 @@
+ipympl
+widgetsnbextension
 alembic
 bash-kernel
 bleach

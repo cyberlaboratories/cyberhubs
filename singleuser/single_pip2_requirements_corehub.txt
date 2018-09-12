@@ -1,3 +1,5 @@
+ipympl
+widgetsnbextension
 bash-kernel
 bleach
 certifi
