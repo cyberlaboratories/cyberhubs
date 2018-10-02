@@ -57,20 +57,20 @@ class NBLabDockerSpawner(DockerSpawner):
         default_jpynb = "notebook"                            
         default_imgSelect = os.environ['JUPYTER_SGLEUSR_IMG']                            
         return """                                            
-        <label for="nbtype">Jupyter Lab is still experimental, terminal works great though ... </label>
+        <label for="nbtype">Jupyter Notebook is default, Jupyter Lab is not working for widgets. </label>
         <select name="nbtype" size="1">                       
         <option value="notebook">Jupyter Notebook</option>    
         <option value="labhub">Jupyter Lab</option>           
         </select>                                             
         <label for="imgSelect">Choose an application hub image ... </label>
         <select name="imgSelect" size="1">
-        <option value="local/wendihub">Web Exploration of NuGrid Data Interactive (WENDI)</option>
-        <option value="local/mesahub">MESAhub latest</option>
-        <option value="cyberhubs/mesahub">MESAhub 0.9.6</option>
-        <option value="cyberhubs/mesawendihub">NuGridSuper</option>
-        <option value="cyberhubs/ppmstarhub">PPMstarHub</option>
-        <option value="local/corehub">AlphaGamma</option>
-        <option value="cyberhubs/corehub">cyberhubs-corehub</option>
+        <option value="cyberhubs/ppmstarhub">PPMstarhub</option>
+        <option value="cyberhubs/wendihub">Web Exploration of NuGrid Data Interactive (WENDI)</option>
+        <option value="cyberhubs/mesahub">MESAhub 0.9.6 (stable)</option>
+        <option value="local/mesahub">MESAhub latest (testing)</option>
+        <option value="local/corehub">CoreHub: empty application template</option>
+        <option value="local/alphagamma">AlphaGamma</option>
+        <option value="local/etamu">EtaMu</option>
         </select>
         """.format(nbtype=default_jpynb,imgSelect=default_imgSelect)                      
                                                               
