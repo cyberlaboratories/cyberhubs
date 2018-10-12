@@ -51,7 +51,7 @@ In our example we will use a CentOS server running as a virtual
 machine in the Compute Canada WestCloud on Arbutus located at the
 University of Victoria and running OpenStack. We will also go over 
 - generally - how to implement _cyberhubs_ on Amazon Web Services 
-(AWS) EC2 free tier machine running Ubuntu 16.04. Read here for 
+(AWS) EC2 free tier machine running Amazon Linux. Read here for 
 more information on Amazon's Free Tier [here](https://aws.amazon.com/free/). 
 The process is very similar for both implementations, where the 
 AWS version is mainly meant as a test-ground for the technology 
@@ -65,7 +65,21 @@ rather than robust computationally heavy calculations or software development.
 
 ### Launching the VM on AWS
 * Login to your account on AWS, and ensure you are elligible for the free tier.
-* 
+* Launch a virtual machine: ![AWS Home](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/857982d2-9f1d-4fc5-9102-db1a9e252043)
+* Choose a virtual machine you'd like to launch. In this case we will be launching the _Amazon Linux AMI 2018.03.0 (HVM), SSD Volume Type_ be sure that it there is a Free Tier Eligible Banner available if you'd like to stay within the free tier. You can alternatively filter results by its free tier eligibility.
+![AWS VM Choice](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/d8069a6d-17dc-4660-b67e-82104c9eb386). 
+* Next you can select the instance type - again look for the free tier banner. In this case we will be using the _t2.micro_ instance. ![InstanceType.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/33f539b7-fb44-4a3c-b9e1-91e8255b7b5c)
+* When ready, hit _Review and Launch_. 
+* You can configure the storage and the tags for your new instance. In this case we will leave them as default. Note the default storage size is a 50Gb SSD.
+* Next, select the _Configure Security Group_ tab from top bar. 
+* The SSH port 22 is open by default, however, in order to access the JupyterHub page, HTTP (80) and HTTPS (443) should also be open. To open a new port click _Add Rule_ and add the ports for both HTTP and HTTPS.
+![securityGroup.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/d36a2e88-c485-4012-ae30-3f0e89ced5d4)
+* When ready, hit _Review and Launch_.
+
+### Key pairs
+* After configuring the VM, you should be taken to a key pair page in which you can create and download an SSH key pair, or choose an existing one.
+* To create a new pair, follow the on-screen prompts, download the `.pem` file and place it in your default SSH directory. On linux, this is usually in `~/.ssh`. 
+![keypair.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/bbdcae58-e5a9-4c40-a910-669773bb70b3)
 
 ### Prepare Unix OS
 * It is recommended to operate this service as a dedicated user, such as the default   `centos` user, or a dedicated user `docker`.
