@@ -49,13 +49,23 @@ This section describes how the server on which the cyberhub is installed has to 
 
 In our example we will use a CentOS server running as a virtual
 machine in the Compute Canada WestCloud on Arbutus located at the
-University of Victoria and running OpenStack.
+University of Victoria and running OpenStack. We will also go over 
+- generally - how to implement _cyberhubs_ on Amazon Web Services 
+(AWS) EC2 free tier machine running Ubuntu 16.04. Read here for 
+more information on Amazon's Free Tier [here](https://aws.amazon.com/free/). 
+The process is very similar for both implementations, where the 
+AWS version is mainly meant as a test-ground for the technology 
+rather than robust computationally heavy calculations or software development. 
 
-### Launching the VM
+### Launching the VM Compute Canada
 * CentOS 7 machine with four cores, 15GB mem and 180GB attached hard drive
 * Assign key pair in Access and Security
 * Assign floating IP so that we can access from outside
 * Associate IP address, and try to connect to IP
+
+### Launching the VM on AWS
+* Login to your account on AWS, and ensure you are elligible for the free tier.
+* 
 
 ### Prepare Unix OS
 * It is recommended to operate this service as a dedicated user, such as the default   `centos` user, or a dedicated user `docker`.
