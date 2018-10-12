@@ -111,7 +111,7 @@ Before starting the docker service prepare some disk mount points and data locat
 - Given the layered file structure of docker images, the host can easily run out of inodes. It is recommended to be proactive and make an ext4 file system to host the system docker directory with large number of inodes: `mkfs -t ext4 -N 2147483648 /dev/XdY`. 
 - This is also where the users containers will live and where some shared user space will be available.
 - If you run out of space here you are in trouble as your docker installation may become unresponsive and difficult to resurrect.
-- 100GB size is minimum for a small installation, a TB is much better, ideally fast storage, such as SSD.
+- 100GiB (50GiB if using AWS) size is minimum for a small installation, a TB is much better, ideally fast storage, such as SSD.
 
 Setup the `/mnt` volume correctly: 
 * In the `scripts` directory of the `cyberhubs` repo review and execute `sudo ./mnt_volumses.sh`.
