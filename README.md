@@ -152,7 +152,7 @@ Start by cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 ### OAuth authentication and user configuration
 * Register the jupyterhub application
 [github registration](https://github.com/settings/applications/new) with GitHub. You need to enter
-	- URL of the server (Homepage URL) - use `https`!
+	- URL of the server (Homepage URL) - use `https`! For an Amazon instance, the public URL of your instance is located in the console page and is titled `Public DNS (IPv4)`.
 	- server URL and add `/hub/oauth_callback`
 * configure environment variables in `scripts/jupyterhub-config-script.sh`:
     * Specify the github admin user names 
