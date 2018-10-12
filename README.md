@@ -70,7 +70,7 @@ rather than robust computationally heavy calculations or software development.
 ![AWS VM Choice](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/d8069a6d-17dc-4660-b67e-82104c9eb386). 
 * Next you can select the instance type - again look for the free tier banner. In this case we will be using the _t2.micro_ instance. ![InstanceType.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/33f539b7-fb44-4a3c-b9e1-91e8255b7b5c)
 * When ready, hit _Review and Launch_. 
-* You can configure the storage and the tags for your new instance. In this case we will leave them as default. Note the default storage size is a 50Gb SSD.
+* You can configure the storage and the tags for your new instance. In this case we will leave them as default. Note the default storage size is a 50GiB SSD.
 * Next, select the _Configure Security Group_ tab from top bar. 
 * The SSH port 22 is open by default, however, in order to access the JupyterHub page, HTTP (80) and HTTPS (443) should also be open. To open a new port click _Add Rule_ and add the ports for both HTTP and HTTPS.
 ![securityGroup.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/d36a2e88-c485-4012-ae30-3f0e89ced5d4)
@@ -81,9 +81,15 @@ rather than robust computationally heavy calculations or software development.
 * To create a new pair, follow the on-screen prompts, download the `.pem` file and place it in your default SSH directory. On linux, this is usually in `~/.ssh`. 
 ![keypair.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/bbdcae58-e5a9-4c40-a910-669773bb70b3)
 
-### Prepare Unix OS
-* It is recommended to operate this service as a dedicated user, such as the default   `centos` user, or a dedicated user `docker`.
-* Start with CentOS 7 image
+### SSH into new instance
+* Now that the instance is running, go to Amazon's Console to view running instances which should look like this:
+![console.PNG](https://images.zenhubusercontent.com/5bc02597fcc72f27390ed1f9/6b63f3ea-f68b-4050-ae85-154e122b748b)
+* SSH normally into your instance using the public IP address, or the 'IPv4 Public IP'.
+* To use the SSH keys, use `ssh -i ~/.ssh/downloaded_key.pem ec2-user@XX.XXX.XXX.XXX`
+
+### Prepare OS
+* It is recommended to operate this service as a dedicated user, such as the default   `centos`, `amazon`, or `docker` user.
+* Start with CentOS 7 or Amazon Linux AMI image
 * Update all packages: `sudo yum update`
 * Install the following packages:
  `sudo yum install git wget sshfs`
@@ -92,7 +98,6 @@ rather than robust computationally heavy calculations or software development.
 	- `sudo yum-config-manager     --add-repo     https://download.docker.com/linux/centos/docker-ce.repo`
 	- `sudo yum install docker-ce-17.09.0.ce`
 * choose a stable version, currently (Nov. 2017 - present) we use: `docker-ce-17.09.0.ce-1.el7'
-
 
 ### Get cyberhubs repo and configure disk volumes and mount points
 
@@ -165,6 +170,7 @@ Start by cloning the [cyberhubs](https://github.com/cyberlaboratories/cyberhubs)
 * Another method is to re-visit the native URL of the _singleuser_ host.The reason this is necessary is because the request for authentification must be re-made. When the URL of the page is simply refreshed, it does not re-submit this request, and so the whitelist and blacklist changes will not be made or seen.   
 
 ### Configure SSL keys/certificates
+**Note: There are a seperate steps for configuring SSL on AWS**
 * A valid SSL key/certificate must be available to properly connect, see `README` in `corehub/multiuser/SSL` 
 
 ### Configure the spawner menu
@@ -196,7 +202,7 @@ with locally available application hub docker images (`docker images`).
 
 ## Maintencance
 ### Prune unused images
-In order to keep the system clean purge unused images from time to time using `docker image prune -a`.
+In order to keep the system clean purge unused images from time to time using `docker image prune -a`.fnote
 
 ### Monitor and set number of processes
 In a default configuration the user that is running the docker service (_centos_ in our case) may run against the processes number limit. Check number of processes with this command: `ps -efL --no-headers |wc -l`. In order to change the max number of processes add `nproc` in `/etc/security/limits.conf` to specify the new soft and hard limits.
