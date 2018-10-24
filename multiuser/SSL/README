@@ -1,24 +1,15 @@
-FOR CentOS 7 IMAGE
--------------------------------------------------------------------------------------------
 Use certbot-auto from https://certbot.eff.org/docs/install.html#operating-system-packages
 
-wget https://dl.eff.org/certbot-auto
-chmod a+x ./certbot-auto
-sudo ./certbot-auto certonly --standalone --preferred-challenges http --rsa-key-size 4096  -d name.of.server.as.in.OAuth.app
+$ wget https://dl.eff.org/certbot-auto
+$ chmod a+x ./certbot-auto
+$ sudo ./certbot-auto certonly --standalone --preferred-challenges http --rsa-key-size 4096  -d name.of.server.as.in.OAuth.app
 
 where `name.of.server.as.in.OAuth.app` is the URL of the server you are running.
 
-sudo cp -r /etc/letsencrypt/archive/name.of.server.as.in.OAuth.app .
-cp ./name.of.server.as.in.OAuth.app/fullchain.pem ssl.crt
-cp ./name.of.server.as.in.OAuth.app/privkey.pem ssl.key
+$ sudo cp -r /etc/letsencrypt/archive/name.of.server.as.in.OAuth.app .
+$ cp ./name.of.server.as.in.OAuth.app/fullchain.pem ssl.crt
+$ cp ./name.of.server.as.in.OAuth.app/privkey.pem ssl.key
 
-FOR Amazon AMI IMAGE
-------------------------------------------------------------------------------------------
-Amazon's policy does not allow the distribution of licenses on their EC2 free tier servers since the public IP address 
-changes every time you stop your instance. 
 
-To bypass this, but still get SSL keys, you can produce your own SSL keys by doing the following.
 
-NOTE: These keys are NOT secure and should not be used outside the realm of testing your server and the Docker capabilities.
 
-openssl req -x509 -newkey rsa:4096 -keyout ssl.key -out ssl.cert -days 365
