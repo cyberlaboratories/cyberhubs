@@ -1,0 +1,24 @@
+name: ml-environment
+
+dependencies:
+  - python=3.4
+  - numpy
+  - toolz
+  - matplotlib
+  - dill
+  - pandas
+  - partd
+  - bokeh
+  - sklearn
+  - tensorflow
+  - jupyter
+  - jupyerhub
+  - jupyterlab
+  - notebook
+  - alembic
+  - python-oauth
+  - tornado
+  - urllib3
+  - simplegeneric
+  - pip:
+    - git+https://github.com/blaze/dask.git#egg=dask[complete]
