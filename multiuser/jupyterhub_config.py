@@ -57,27 +57,37 @@ class NBLabDockerSpawner(DockerSpawner):
         default_jpynb = "notebook"                            
         default_imgSelect = os.environ['JUPYTER_SGLEUSR_IMG']                            
         return """                                            
-        <label for="nbtype">Jupyter Lab is still experimental, terminal works great though ... </label>
+        <label for="nbtype">Jupyter:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
         <select name="nbtype" size="1">                       
-        <option value="notebook">Jupyter Notebook</option>    
         <option value="labhub">Jupyter Lab</option>           
-        </select>                                             
-        <label for="imgSelect">Choose an application hub image ... </label>
+        <option value="notebook">Jupyter Notebook</option>    
+        </select><br>                                             
+        <label for="imgSelect">Application:&nbsp;</label>
         <select name="imgSelect" size="1">
-        <option value="cyberhubs/superastrohub">SuperAstroHub</option>
-        <option value="cyberhubs/ppmstarhub">PPMstarhub</option>
         <option value="cyberhubs/mesawendihub">Mesa.NuGrid.WENDI</option>
+        <option value="cyberhubs/ppmstarhub">PPMstarHub: Analyse stellar hydro data</option>
+        <option value="cyberhubs/mesahub">MESAHub: Run and analyse MESA simulations</option>
         <option value="cyberhubs/mlhub">MLhub</option>
         <option value="cyberhubs/mp248">MP248</option>
-        <option value="local/alphatheta">AlphaTheta</option>
+        <option value="cyberhubs/basichub">BasicHub: Common Python and Linux utilities</option>
+        <option value="cyberhubs/corehub">CoreHub: Empty template application</option>
         <option value="local/etamu">EtaMu</option>
-        <option value="local/omegaphi">OmegaPhi</option>
         </select>
         """.format(nbtype=default_jpynb,imgSelect=default_imgSelect)                      
+
+
+
+#        <option value="cyberhubs/mesawendihub">NuGridMesa: Explore NuGrid data, perform MESA simulations</option>
+
+#        <option value="local/mesahub">MESAhub latest, testing</option>
+#        <option value="cyberhubs/mesawendihub">NuGridSuper</option>
+#        <option value="cyberhubs/ppmstarhub">PPMstarHub</option>
+
                                                               
 #: add lines like the one below to the menue above to provide more application hub options 
 #: in the spawner menu above
 #        <option value="cyberhubs/mlhub">mlhub</option>
+#        <option value="viaenv">Via Environment Variable</option>
 
     def options_from_form(self, formdata):                    
         options = {}                                          
