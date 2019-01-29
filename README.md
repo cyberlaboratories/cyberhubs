@@ -70,6 +70,37 @@ University of Victoria and running OpenStack.
 * choose a stable version, currently (Nov. 2017 - present) we use: `docker-ce-17.09.0.ce-1.el7'
 
 
+#### Server for many users
+If you expect to have very large number of users you will have to increase the number of processes allowed per user (this is the user who is running the docker!). In file `/etc/security/limits.d/20-nproc.conf` change
+
+```
+*          soft    nproc     4096
+
+```
+
+ to
+
+```
+*          soft    nproc     unlimited
+```
+
+In addition, in `/etc/security/limits.conf` add 
+
+```
+*               soft    nofile  64000
+*               hard    nofile  64000
+```
+to increase the number of open files allowed. 
+
+Check with `ulimit -a` which should include the lines
+
+```
+open files                      (-n) 64000
+...
+max user processes              (-u) 512383
+
+```
+
 ### Get cyberhubs repo and configure disk volumes and mount points
 
 Checkout `cyberlaboratories/cyberhubs` repository: 
