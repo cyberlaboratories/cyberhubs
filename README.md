@@ -62,7 +62,13 @@ University of Victoria and running OpenStack.
 * Start with CentOS 7 image
 * Update all packages: `sudo yum update`
 * Install the following packages:
- `sudo yum install git wget sshfs`
+ `sudo yum install git wget sshfs` and for CADC VOspace: `fuse fuse-devel `
+* For CADC VOspace we also need `vos` and vofs`
+	- `yum install https://centos7.iuscommunity.org/ius-release.rpm`
+	- `sudo yum install https://centos7.iuscommunity.org/ius-release.rpm`
+	- `sudo  yum install python36u python36u-devel python36u-pip` 
+	- `sudo pip3.6  install vos vofs`
+	- and then the `mnt.cadc` alias should work
 * Install epel-repository packages: `sudo yum install epel-release`
 * Install [docker-ce (community edition)](https://docs.docker.com/engine/installation/linux/docker-ce/centos/)
 	- `sudo yum-config-manager     --add-repo     https://download.docker.com/linux/centos/docker-ce.repo`
@@ -75,7 +81,6 @@ If you expect to have very large number of users you will have to increase the n
 
 ```
 *          soft    nproc     4096
-
 ```
 
  to
