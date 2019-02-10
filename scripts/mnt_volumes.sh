@@ -1,8 +1,10 @@
 # execute with sudo, then source mnt_alias.sh
 # 
-set -x 
-docker_user=docker   # e.g. s5, calcium, almuhit
-#docker_user=centos  # compute canada
+#set -x 
+
+# set docker user name
+#docker_user=docker  
+docker_user=centos  # compute canada cloud SL7 servers
 
 #mntpoint='/mnt/scratch/dockerstuff' # s5
 mntpoint='/mnt'                      # silver
@@ -18,7 +20,7 @@ create_dir() {
 }
 
 printf "Made or checked dir: "
-for dir in $mntpoint"/var" $mntpoint"/var/lib" $mntpoint"/var/lib/docker" $mntpoint"/tmp"  $mntpoint"/data" $mntpoint"/user"
+for dir in $mntpoint"/var" $mntpoint"/var/lib" $mntpoint"/var/lib/docker" $mntpoint"/tmp"  $mntpoint"/data" $mntpoint"/user" $mntpoint"/jupyterhub_users"
 do
     [ ! -d $dir ] && create_dir $dir
     printf $dir" "

@@ -27,21 +27,21 @@ class AstroAuthenticator(GitHubOAuthenticator):
         return username in self.whitelist
 
 
-config.JupyterHub.authenticator_class = globals()[os.environ['JUPYTER_HUB_AUTH_CL']] if os.environ['JUPYTER_HUB_AUTH_CL'] in globals() else os.environ['JUPYTER_HUB_AUTH_CL']
+config.JupyterHub.authenticator_class = globals()[os.environ['JUPYTER_HUB_AUTH_CL']] \
+                                      if os.environ['JUPYTER_HUB_AUTH_CL'] in globals() \
+                                      else os.environ['JUPYTER_HUB_AUTH_CL']
 
 config.GitHubOAuthenticator.oauth_callback_url = os.environ['JUPYTER_HUB_AUTH_UR']
 config.GitHubOAuthenticator.client_id = os.environ['JUPYTER_HUB_CLNT_ID']
 config.GitHubOAuthenticator.client_secret = os.environ['JUPYTER_HUB_CLNT_SE']
 
-# locations of mounted volumes
-config.DockerSpawner.read_only_volumes = {os.environ['JUPYTER_HUB_RO_PATH'].split(':')[0]:os.environ['JUPYTER_HUB_RO_PATH'].split(':')[1]}
-config.DockerSpawner.volumes = {os.environ['JUPYTER_HUB_VL_PATH'].split(':')[0]:os.environ['JUPYTER_HUB_VL_PATH'].split(':')[1]}
-
-# set of usernames of admin users                                                                                                          
+# set of usernames of admin users
 config.Authenticator.admin_users = set(os.environ['JUPYTER_HUB_ADMN_NM'].split(','))
 
-# white list from scripts/jupyterhub-config-script.sh (can not be changed after launch, use blist file instead)
+# white list from scripts/jupyterhub-config-script.sh (can not be
+# changed after launch, use blist file instead)
 # if whitelist environment variable is blank, do not assign it to anything.
+
 if os.environ['JUPYTER_HUB_WHT_LST']!='':
     config.Authenticator.whitelist = set(os.environ['JUPYTER_HUB_WHT_LST'].split(','))
 
@@ -64,36 +64,20 @@ class NBLabDockerSpawner(DockerSpawner):
         </select><br>                                             
         <label for="imgSelect">Application:&nbsp;</label>
         <select name="imgSelect" size="1">
-        <option value="cyberhubs/mesawendihub">Mesa.NuGrid.WENDI</option>
-        <option value="cyberhubs/ppmstarhub">PPMstarHub: Analyse stellar hydro data</option>
-        <option value="cyberhubs/mesahub">MESAHub: Run and analyse MESA simulations</option>
-        <option value="cyberhubs/mlhub">MLhub</option>
-        <option value="cyberhubs/mp248">MP248</option>
+        <option value="cyberhubs/mesahub">NuGrid.Mesa</option>
         <option value="cyberhubs/basichub">BasicHub: Common Python and Linux utilities</option>
         <option value="cyberhubs/corehub">CoreHub: Empty template application</option>
         <option value="local/etamu">EtaMu</option>
         </select>
         """.format(nbtype=default_jpynb,imgSelect=default_imgSelect)                      
-
-
-
-#        <option value="cyberhubs/mesawendihub">NuGridMesa: Explore NuGrid data, perform MESA simulations</option>
-
-#        <option value="local/mesahub">MESAhub latest, testing</option>
-#        <option value="cyberhubs/mesawendihub">NuGridSuper</option>
-#        <option value="cyberhubs/ppmstarhub">PPMstarHub</option>
-
                                                               
-#: add lines like the one below to the menue above to provide more application hub options 
-#: in the spawner menu above
-#        <option value="cyberhubs/mlhub">mlhub</option>
 #        <option value="viaenv">Via Environment Variable</option>
 
     def options_from_form(self, formdata):                    
         options = {}                                          
         options['nbtype'] = formdata['nbtype']                
         default_url = ''.join(formdata['nbtype'])             
-        #print("Belaid: default_url is set to  " + ' '.join(options['nbtype']))                                             
+        #print("Belaid: default_url is set to  " + ' '.join(options['nbtype']))
 #        self.container_image="wendi-hub/singleuser"            
 #        self.container_image="fherwig/core-hub:singleuser"
         imgval=''.join(formdata['imgSelect'])
@@ -108,9 +92,9 @@ class NBLabDockerSpawner(DockerSpawner):
             self.default_url = "/lab"                         
         else:                                                 
             self.default_url = "/tree"                        
-            #options['nbtype']=['--SingleUserNotebookApp.default_url='+self.default_url,                                   
-            #                   '--notebook_dir='+self.notebook_dir]                                                       
-            #print("Belaid: Setting options "+' '.join(options['nbtype']))                                                 
+            #options['nbtype']=['--SingleUserNotebookApp.default_url='+self.default_url,
+            #                   '--notebook_dir='+self.notebook_dir]
+            #print("Belaid: Setting options "+' '.join(options['nbtype']))
         return options                                        
     def get_args(self):
         argv = super().get_args()                             
@@ -118,19 +102,38 @@ class NBLabDockerSpawner(DockerSpawner):
             argv.extend(self.user_options['nbtype'])          
         return argv                                           
 
+# create persistent work dir of users
+def create_workdir (spawner):
+    username = spawner.user.name
+    volume_path = os.path.join('/jupyterhub_users', username)
+    if not os.path.exists(volume_path):
+        os.mkdir(volume_path, 0o755)
+        #Adjust the permissions if necessary – to match that of the container
+        # 1000 is the uid under which singleuser container is running...
+        os.system('chown -R 1000.1000 '+volume_path)  # !! this needs updating
+config.Spawner.pre_spawn_hook = create_workdir
+
+
+# locations of mounted volumes
+config.DockerSpawner.read_only_volumes = \
+   {os.environ['JUPYTER_HUB_RO_PATH'].split(':')[0]:os.environ['JUPYTER_HUB_RO_PATH'].split(':')[1], \
+    '/home/centos/jupyter_config':'/jupyterhub_config'}
+config.DockerSpawner.volumes = \
+   {'/mnt/jupyterhub_users/{username}': '/home/user/{username}_config', \
+    os.environ['JUPYTER_HUB_VL_PATH'].split(':')[0]:os.environ['JUPYTER_HUB_VL_PATH'].split(':')[1] }
+
 # choose one:
 # spawn from our spawner:
 config.JupyterHub.spawner_class = NBLabDockerSpawner              
 # spawn from system spawner:
 #config.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'
 
-#config.DockerSpawner.container_image = "wendi-hub/singleuser:latest"
-#config.DockerSpawner.container_image = "fherwig/core-hub:singleuser"
 #config.DockerSpawner.container_image = os.environ['JUPYTER_SGLEUSR_IMG']
 config.DockerSpawner.use_internal_ip = True
 config.DockerSpawner.network_name = network_name
 config.DockerSpawner.extra_host_config = {"network_mode":network_name}
-config.DockerSpawner.extra_create_kwargs = {os.environ['JUPYTER_USERGROUPID'].split('=')[0]:os.environ['JUPYTER_USERGROUPID'].split('=')[1]}
+config.DockerSpawner.extra_create_kwargs = \
+     {os.environ['JUPYTER_USERGROUPID'].split('=')[0]:os.environ['JUPYTER_USERGROUPID'].split('=')[1]}
 config.DockerSpawner.remove_containers = True
 config.DockerSpawner.hub_ip_connect = hub_ip
 
@@ -149,7 +152,7 @@ config.LocalAuthenticator.create_system_users = True
 config.JupyterHub.hub_ip = hub_ip
 config.JupyterHub.hub_port = 8000
 
-# ussing ssl so set to 443
+# using ssl so set to 443
 config.JupyterHub.port = 443
 ###Belaid: please read this from the outside - mount a volume from the host.
 config.JupyterHub.ssl_cert = '/srv/jupyterhub/SSL/ssl.crt'
@@ -162,7 +165,7 @@ config.JupyterHub.cookie_secret = cookie.communicate()[0][:-1]
 config.JupyterHub.proxy_auth_token = token.communicate()[0][:-1]
 config.JupyterHub.log_level = 'DEBUG'
 config.JupyterHub.debug_proxy=True
-#Logo:                                                                                                                  
+#Logo:
 config.JupyterHub.logo_file = '/srv/jupyterhub/logo/logo.png'
 
 # Enable debug-logging of the single-user server
