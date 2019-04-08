@@ -66,7 +66,8 @@ University of Victoria and running OpenStack.
 * For CADC VOspace we also need `vos` and vofs`
 	- `yum install https://centos7.iuscommunity.org/ius-release.rpm`
 	- `sudo yum install https://centos7.iuscommunity.org/ius-release.rpm`
-	- `sudo  yum install python36u python36u-devel python36u-pip` 
+	- `sudo yum update`
+	- `sudo  yum install -y python36u python36u-libs python36u-devel python36u-pip` 
 	- `sudo pip3.6  install vos vofs`
 	- and then the `mnt.cadc` alias should work
 * Install epel-repository packages: `sudo yum install epel-release`
