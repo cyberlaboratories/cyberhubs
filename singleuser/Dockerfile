@@ -29,7 +29,6 @@ RUN pip2 install -r /tmp/requirements/single_pip2_requirements_corehub.txt && \
     npm install --save-dev webpack
 
 RUN jupyter serverextension enable --py jupyterlab --sys-prefix && \ 
-    jupyter labextension install @jupyterlab/hub-extension && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager &&\
     jupyter labextension install jupyter-matplotlib &&\
     jupyter labextension install @mflevine/jupyterlab_html 
