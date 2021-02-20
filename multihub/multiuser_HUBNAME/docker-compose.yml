@@ -1,0 +1,61 @@
+# Jupyterhub docker-compose configuration
+version: "2"
+
+services:
+  multiuser:
+#: begin docker image selection
+#:
+#: it is not required to rebuild the multiuser docker image unless there are 
+#: changes to either the Dockerfile or the multi_pip3_requirements.txt requirements
+#: file; all other changes, including to jupyterhub_config.py file or to
+#: scripts/jupyter_config.sh file, will be picked up correctly with the pre-
+#: built image; when uncommenting the next four lines the docker image will 
+#: be built in place (not recommended)
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
+#    image: local/multiuser
+#: the line below will be used to launch the pre-built image on dockerhub; if 
+#: the above four lines are uncommented and instead the following line is
+#: commented then the docker images is built in place (not recommended)
+    image: cyberhubs/multiuser:latest
+#: end docker image selection
+    container_name: ${DOCKER_MACHINE_NAME}
+    volumes:
+      - "/usr/bin/docker:/usr/bin/docker:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
+      - "./SSL/:/srv/jupyterhub/SSL:ro"
+      - "./access:/srv/jupyterhub/access:ro"
+      - "./logo:/srv/jupyterhub/logo:ro"
+      - "./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro"
+      - "/mnt/jupyterhub_users:/jupyterhub_users:rw"
+    ports:
+      - "127.0.0.1:!!PORT!!:1443"
+    networks:
+      - default
+
+    environment:
+      DOCKER_NETWORK_NAME: ${DOCKER_NETWORK_NAME}
+      DOCKER_MACHINE_NAME: ${DOCKER_MACHINE_NAME}
+      
+      JUPYTER_HUB_AUTH_CL: ${JUPYTER_HUB_AUTH_CL}
+      JUPYTER_HUB_AUTH_UR: ${JUPYTER_HUB_AUTH_UR}
+      
+      JUPYTER_HUB_CLNT_ID: ${JUPYTER_HUB_CLNT_ID}
+      JUPYTER_HUB_CLNT_SE: ${JUPYTER_HUB_CLNT_SE}
+      
+      JUPYTER_HUB_ADMN_NM: ${JUPYTER_HUB_ADMN_NM}
+      JUPYTER_HUB_WHT_LST: ${JUPYTER_HUB_WHT_LST}      
+      
+      JUPYTER_HUB_RO_PATH: ${JUPYTER_HUB_RO_PATH}
+      JUPYTER_HUB_VL_PATH: ${JUPYTER_HUB_VL_PATH}
+
+      JUPYTER_SGLEUSR_IMG: ${JUPYTER_SGLEUSR_IMG}
+      JUPYTER_USERGROUPID: ${JUPYTER_USERGROUPID}
+
+    command: jupyterhub -f /srv/jupyterhub/jupyterhub_config.py --debug 
+
+networks:
+  default:
+    external:
+      name: ${DOCKER_NETWORK_NAME}

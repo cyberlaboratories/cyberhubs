@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html >
+<!-- Based on the template "Responsive CSS Tabs" downloaded from https://dcrazed.com/html5-css3-accordion-tabs/ -->
+<head>
+<meta charset="UTF-8">
+<title>UVic ARC ASDR Astrohub</title>
+<style>
+/* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+
+.banner {
+  margin: 0px auto;
+  padding: 0px auto;
+  height: 100px auto;
+  background: url('./images/arc_white.png'), url('./images/uvic_white.png'), url(images/uvic_colours.png), linear-gradient(to bottom,#335276,#002754 50%);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: center left 12px, center right 80px, center right, center left;
+  background-size: 10%, 10%, 9% 100%, cover;
+}
+
+.hubs {
+  float: left;
+  position: relative;
+  width: 30%;
+  padding-bottom: 30%;
+  margin: 1.66%;
+  overflow: hidden;
+  padding-left: 1.5%;
+}
+
+.hubs p {
+  font-size: 20px;
+}
+
+.hub {
+  position: absolute;
+  height: 90%;
+  width: 90%;
+  padding: 5%;
+  overflow: hidden;
+  padding-top: 30%;
+}
+
+.textbox {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left; 
+  align-content: center;
+  align-items: center;
+  width: 70%;
+  background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7));
+  margin-bottom: 50px;
+  overflow: hidden;
+}
+
+.textbox p {
+  font-size: 16px;
+}
+
+.abouttext {
+  padding: 30px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.abouttext p {
+  color: black;
+  text-shadow: 1px 1px #DCDCDC;
+  font-size: 16px;
+}
+
+.abouttext ul {
+  color: black;
+  text-shadow: 1px 1px #DCDCDC;
+  font-size: 16px;
+}
+
+.abouttext a {
+  color: black;
+}
+
+.researchtext {
+  padding: 30px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.hub:hover {
+  opacity: 0.7;
+}
+
+.titletext {
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px gray;
+}
+
+.innertext {
+  color: white;
+  text-shadow: 1px 1px gray;
+}
+
+*, *:before, *:after {
+  margin: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 14px/1 'Open Sans', sans-serif;
+  background-image: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url(images/hcore-bg.png);
+  background-size: cover;
+}
+
+h1 {
+  padding-top: 50px;
+  padding-bottom: 10px;
+  font-weight: 100;
+  font-size: 12px auto;
+  text-align: center;
+  color: white;
+  width:50px auto;
+}
+
+h2 {
+  padding-bottom: 50px;
+  font-weight: 100;
+  font-size: 12px auto;
+  text-align: center;
+  color: white;
+  width:50px auto;
+}
+
+p, ul, a {
+  line-height: 1.5;
+  font-size: 16px;
+  padding-bottom: 20px;
+  color: white;
+}
+
+section {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid #696969;
+}
+
+input {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid transparent;
+  font-size: 20px;
+}
+
+label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+label[for*='1']:before {
+  content: '\f1cb';
+}
+
+label[for*='2']:before {
+  content: '\f17d';
+}
+
+label[for*='3']:before {
+  content: '\f16b';
+}
+
+label[for*='4']:before {
+  content: '\f1a9';
+}
+
+label:hover {
+  color: #FF0000;
+  cursor: pointer;
+}
+
+input:checked + label {
+  color: #FF0000;
+  border: 1px solid #696969;
+  border-top: 2px solid #ffae42;
+  border-bottom: 1px solid #373742;
+}
+
+#ppm {
+  /*background-image: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), url(images/stellar_hydro.jpg);
+  background-size: cover;
+  background-position: 45%;*/
+  background: linear-gradient(rgba(0,114,187,0.7), rgba(0,114,187,0.7));
+}
+
+#arccsa {
+  /*background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.3)), url(images/nebula.jpg);
+  background-size: auto;*/
+  background: linear-gradient(rgba(251,184,18,0.7), rgba(251,184,18,0.7));
+}
+
+#newearth {
+  /*background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.3)), url(images/nebula.jpg);
+  background-size: auto;*/
+  background: linear-gradient(rgba(54,53,83,0.7), rgba(54,53,83,0.7));
+}
+
+#nugrid {
+  /*background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url(images/fe_table.png);*/
+  background: linear-gradient(rgba(231,45,41,0.7), rgba(231,45,41,0.7));
+}
+
+#gtab1:checked ~ #gcontent1,
+#gtab2:checked ~ #gcontent2,
+#gtab3:checked ~ #gcontent3,
+#gtab4:checked ~ #gcontent4 {
+  display: block;
+}
+ 
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4 {
+  display: block;
+}
+
+@media screen and (max-width: 1000px) {
+  .hubs {
+    float: left;
+    position: relative;
+    width: 46%;
+    padding-bottom: 46%;
+    margin: 1.66%;
+    overflow: hidden;
+    padding-left: 1.5%;
+  }
+
+  .hub {
+    position: absolute;
+    height: 90%;
+    width: 90%;
+    padding: 5%;
+    padding-top: 30%;
+  }
+
+  h1 {
+   font-size: 16px;
+  }
+  
+  h2 {
+    font-size: 12px;
+  }
+
+
+@media screen and (max-width: 850px) {
+  h1 {
+   font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  label {
+    font-size: 0;
+  }
+
+  label:before {
+    margin: 0;
+    font-size: 18px;
+  }
+  h1 {
+   font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  label {
+    padding: 15px;
+  }
+  h1 {
+    font-size: 10px;
+  }
+}
+
+</style>
+<script src="js/prefixfree.min.js"></script>
+</head>
+<body>
+
+<div class="banner">
+  <h1>ARC Astrohub<br></h1>
+  <h2>Gateway to the Astrophysics Simulation Data Repository</h2>
+</div>
+
+<main>
+<center>
+<input id="gtab1" type="radio" name="gtabs" checked>
+<label for="gtab1">Hubs</label>
+
+<input id="gtab2" type="radio" name="gtabs">
+<label for="gtab2">Research</label>
+
+<input id="gtab3" type="radio" name="gtabs">
+<label for="gtab3">About</label>
+
+<section id="gcontent1">
+  <center><p>Astrohubs for data analysis, fusion, sharing, exploration, modeling.</p></center>
+
+  <div class="hubs">
+    <a href="https://astrohub.uvic.ca/ppmstar/" target="_blank">
+      <div id="ppm" class="hub">
+      <p class="titletext">PPMstar</p>
+      <p class="innertext">3-dimensional stellar hydrodynamic simulations</p>
+      </div>
+    </a>
+  </div>
+
+  <div class="hubs">
+    <a href="https://astrohub.uvic.ca/wendi2/" target="_blank">
+      <div id="nugrid" class="hub">
+      <p class="titletext">NuGrid</p>
+      <p class="innertext">NuGrid international collaboration nuclear astrophysics simulations</p><br>
+      </div>
+    </a>
+  </div>  
+  
+  <div class="hubs">
+    <a href="https://astrohub.uvic.ca/csa/" target="_blank">
+      <div id="arccsa" class="hub">
+      <p class="titletext">CSA</p>
+      <p class="innertext">Hub of the Computational Stellar Astrophysics (CSA) group in the Astronomy Research Centre</p>
+      </div>
+    </a>
+  </div>
+
+  
+  <div class="hubs">
+    <a href="https://astrohub.uvic.ca/newearth/" target="_blank">
+      <div id="newearth" class="hub">
+      <p class="titletext">NewEarth</p>
+      <p class="innertext">Hub for exoplanet research in the Astronomy Research Centre</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="gcontent2">
+  <p style="width: 65%">Astrohub supports research in different ARC areas. Astrohub is used by local ARC groups, but its greatest strength is to enable distributed teams to collaborate seamlessly on data generation, analysis, simulation, fusion. This section describes some of the research and teams supported by Astrohub.</p>
+  <div id="ppm" class="textbox">
+    <div class="researchtext">
+    <p style="font-weight: bold">PPMStar</p>
+    <p>The PPMstar hub provides access to the analysis of large-scale
+    3-dimensional hdyrodynamic simulations of stellar convection, such
+    as the largest
+    to-date <a href="https://www.rdmag.com/article/2018/06/canadas-most-powerful-research-supercomputer-simulates-life-star">simulations
+    of core-convection in a massive star</a> that was performed by
+    UVic's Computational Stellar Astrophysics group lead by Falk
+    Herwig in collaboration with Paul Woodward and his team at the
+    Laboratory of Computational Science and Engineering at the
+    University of Minnesota on the
+    new <a href="https://www.computecanada.ca/">Compute Canada</a> supercomputer <a href="https://docs.computecanada.ca/wiki/Niagara">Niagara</a>.  <a href="http://www.astro.uvic.ca/~fherwig/StellarHydro/Niagara">Movies
+    and images</a> of this ground-breaking simulations are available,
+    but the PPMstar hub allows researchers around the world to
+    investigate these data sets themselves and perform their own
+    analysis. 
+
+    <p>The following projects and researchers are presently using the
+    PPMstar hub in collaboration with ARC members:</p>
+   <ul> 
+      <li>Development of high-performance 3D hydrodynamics simulations Code development, collaborative exploration of science runs. Paul Woodward and three students. University of Minnesota, USA. </li>
+     <li>Stellar asteroseismology. Conny Aerts and her group, 2 PDFs and one student. KU Leuven, Belgium</li>
+      <li>Stellar hydrodynamics of oxygen shell convection in massive stars. Robert Andrassy, PDF. Heidelberg Institute for Theoretical Studies, Germany.</li>
+      <li> Visualisation development. Alex Razoumov, staff member. WestGrid, Canada.
+    </ul>
+
+    <p>The PPMstar hub also serves the complete analysis workflow of
+    selected papers of the PPMstar collaboration serving the goal of
+    scientific reproducibility. Researchers can access PPMstar hub and
+    check and reproduce the analysis of the following papers: </p>
+   <ul>
+      <li>     <a href="https://academic.oup.com/mnras/article/465/3/2991/2417019">Jones S, Andrássy R, Sandalski S, Davis A, Woodward P, Herwig F. 2017. MNRAS. 465(3):2991–3010</a></li>
+      <li>     <a href="https://arxiv.org/abs/1808.04014">Andrassy R, Herwig F, Woodward P, Ritter C. 2018, MNRAS revision requested, 2018arXiv180804014A</a></li>
+
+    </ul>
+    </div>
+  </div>
+
+  <div id="nugrid" class="textbox">
+    <div class="researchtext">
+    <p style="font-weight: bold">NuGrid</p>
+    <p>The international <a href="http://www.nugridstars.org">NuGrid
+    collaboration</a> combines 50 researchers in 21 active
+    institutions in 8 countries. The scientific goal is to develop
+    simulation codes for simulations of the formation of the elements
+    in stars and stellar explosions, and to use these codes to
+    construct comprehensive data sets that are used to interpret and
+    understand observations of stars. </p>
+    <p>Projects supported on NuGrid Hub, in collaboration with ARC members:</p>
+    <ul>
+      <li>OZoNE - Nucleosynthesis simulations for a wide range of nuclear astrophysics environments</li>
+      <ul>
+	<li>University of Hull, UK: Marco Pignatari, Richard Stancliffe</li>
+	<li>Observatory Torino, INAF, Italy: Claudia Travaglio</li>
+	<li>Los Alamos National Laboratory, NM, USA: Sam Jones</li>
+	<li>Chinese Academy of Sciences, Chine: Suqing Hou
+	<li>UPC-Barcelona, Spain: Adria Casanovas-Hoste
+	<li>CSIC-Univeristy of Valencia, Spain: Cesar Domingo-Pardo
+      </ul>
+      <li>Galactic Chemical Evolution</li>
+      <ul>
+	<li> Konkoly Observatory, Hungary: Benoit Cote
+      </ul>
+      <li>Nucleosynthesis in the first stars</li>
+      <ul>
+	<li>University of Edinburgh, UK: Claudia Lederer, Sam Lloyd, Umberto Battino
+      </ul>
+    </ul>
+    </div>
+  </div>
+
+  <div id="arccsa" class="textbox">
+    <div class="researchtext">
+
+    <p style="font-weight: bold">Computational Stellar Astrophysics</p>
+
+    <p>The CSA hub is used by
+    the <a href="http://csa.phys.uvic.ca">Computational Stellar
+    Astrophysics group</a> in
+    the <a href="http://www.uvic.ca/arc">Astronomy Research
+    Centre</a>.</p>
+
+    <p>CSA hub supports five present group members and four former
+    post-doctoral researchers of the CSA group who are still
+    collaborating with us.</p>
+    </div>
+  </div>
+
+  <div id="newearth" class="textbox">
+    <div class="researchtext">
+    <p style="font-weight: bold">NewEarth</p>
+    <p>The NewEarth Hub supports exo-planet research in the Astronomy Research Centre. </p>
+    </div>
+  </div>
+</section>
+
+<section id="gcontent3">
+  <div class="textbox">
+    <div class="abouttext">
+
+  <h3>Technology</h3>
+
+  <p>Astrohub is an implementation of
+  the <a href="https://iopscience.iop.org/article/10.3847/1538-4365/aab777/meta">Cyberhubs:
+  Virtual Research Environments for Astronomy</a> system developed by
+  a team lead by Falk Herwig in the Astronomy Research
+  Centre. Cyberhubs combines Docker virtualization with the latest
+  JupyterHub notebook technology, and incorporates third-party
+  authentication. Cyberhubs allow multiple users to access the same
+  virtual research environment composed of a combination of storage,
+  processing capacity and dedicated software packages specific to the
+  particular research goals.</p>
+
+  <p>Astrohub adds to the multiuser capability of cyberhubs a multihub
+  capability, meaning that multiple hubs can be served on the same
+  server. Astrohub is presently running on a virtual server of the
+  Compute Canada WestCloud.
+
+  <h3>Team</h3>
+    <p>This Astrohub implementation and the latest version of
+    cyberhubs has been developed, implement and is operated by</p>
+    <ul>
+      <li>Falk Herwig (ARC, team leader, requirements, systems design, implementation)</li>
+      <li>Belaid Moa (RCS, technical design and proto-typing)</li>
+      <li>Stephenson Yang (ARC, development, implementation, maintenance & operation)</li>
+      <li>Adam Paul (ARC, Coop student, html programming)</li>
+    </ul>
+
+  <h3>Acknowledgements</h3>
+
+<p> An earlier version of cyberhubs was developed as part of the
+CANFAR project WENDI, funded by Canarie, UVic and NSERC. Over the
+years Cyberhubs has been supported by funds from NSERC, CFI via
+Compute Canada, UVic, EcoCanada. The PPMstar hub and specifically the
+advanced data storage, compression and access methods required to make
+large 3D hydrdynamic simulations accessible in this platform have been
+developed in collaboration with Paul Woodward and his team at the
+University of Minnesota, supported through an NSF CDS&E grant. Aspects
+and capabilities related to CSA's nuclear astrophysics research
+(<a href="http://wendi.nugridstars.org">WENDI</a>) have been developed
+with support from NSF's Physics Frontier Center Joint Institute for
+Nuclear Astrophysics. </p>
+
+  <h3>Additional Hubs</h3>
+  <p>Astrohub serves the following specialized group hubs: </p>
+    <ul>
+      <li><a href="https://206-12-89-142.cloud.computecanada.ca/ppmstar-lcse/" target="_blank">PPMstar LCSE Hub</a></li>
+    </ul>
+
+
+    </div>
+  </div> 
+</section>
+</center>
+</main>
+
+<br>    
+
+</body>
+</html>

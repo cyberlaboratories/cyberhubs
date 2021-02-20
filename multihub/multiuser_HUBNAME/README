@@ -1,0 +1,54 @@
+In most cases it is not necessary to build the multiuser docker image
+yourself, and instead it is recommended to use the pre-built multiuser
+image from the cyberhubs docker hub repository. Check the
+./docker-compose.yml file where the option to build the images
+yourself or to pull the multiuser image from the docker hub are
+clearly indicated. Uncomment the desired option. Again, the default is
+to pull the image from docker hub, and this option is recommended.
+
+Building manually:
+------------------
+If you decide to build yourself the docker-compose mechanism will launch the 
+build command automatically if the image does not yet exist. If you need to 
+build manually, use 
+  docker-compose build
+
+Launching cyberlab:
+-------------------
+Before launching, ensure that multiuser/SSL/ contains the necessary 
+certificates in that directory. See README in multiuser/SSL/README
+for instructions on how to get said keys.
+
+Create local network for jupyter instances (if you have to
+docker-compose down and up you do not to redo the network create
+step):
+
+ docker network create jupyterhub-network
+    
+To start server run command:
+
+ docker-compose up
+
+If you do not wish to see debugging information, and wish to run up
+docker in the background use:
+
+ docker-compose up -d
+
+Stoping and cleaning up:
+------------------------
+To stop the server run command:
+
+ docker-compose down
+
+Kill and remove all docker container:
+
+ docker kill $(docker ps -aq)
+ docker rm $(docker ps -aq)
+
+Or all together:
+
+ docker-compose down; docker kill $(docker ps -aq); docker rm $(docker ps -aq)
+
+Remove docker images: 
+
+ docker rmi $(docker images -q)
